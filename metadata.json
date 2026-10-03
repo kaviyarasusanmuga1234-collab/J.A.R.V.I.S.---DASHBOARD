@@ -1,0 +1,11 @@
+{
+  "name": "J.A.R.V.I.S. System Telemetry & Information Dashboard",
+  "description": "Futuristic real-time system monitoring dashboard with customizable HUD widgets, telemetry gauges, interactive terminals, and detailed user activity logs.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

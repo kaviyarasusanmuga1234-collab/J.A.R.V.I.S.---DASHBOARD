@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile, dashboard preferences, and active HUD configuration",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 512 },
+        "theme": { "type": "string", "maxLength": 64 },
+        "refreshRate": { "type": "number" },
+        "soundEnabled": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "UserLog": {
+      "title": "UserLog",
+      "description": "Persistent audit log entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 },
+        "category": { "type": "string", "maxLength": 64 },
+        "severity": { "type": "string", "maxLength": 32 },
+        "action": { "type": "string", "maxLength": 256 },
+        "details": { "type": "string", "maxLength": 1024 },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "timestamp", "category", "severity", "action", "userId"]
+    },
+    "UserLocation": {
+      "title": "UserLocation",
+      "description": "Geo telemetry location record",
+      "type": "object",
+      "properties": {
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "accuracy": { "type": "number" },
+        "city": { "type": "string", "maxLength": 128 },
+        "country": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["latitude", "longitude", "userId"]
+    },
+    "AIArtifact": {
+      "title": "AIArtifact",
+      "description": "Saved AI outputs including generated images, music, transcripts, or videos",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "maxLength": 64 },
+        "prompt": { "type": "string", "maxLength": 2048 },
+        "resultUrl": { "type": "string", "maxLength": 4096 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "type", "prompt", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile and HUD preferences"
+    },
+    "/users/{userId}/logs/{logId}": {
+      "schema": { "$ref": "#/entities/UserLog" },
+      "description": "User persistent system activity logs"
+    },
+    "/users/{userId}/locations/{locationId}": {
+      "schema": { "$ref": "#/entities/UserLocation" },
+      "description": "User saved telemetry geo locations"
+    },
+    "/users/{userId}/ai_artifacts/{artifactId}": {
+      "schema": { "$ref": "#/entities/AIArtifact" },
+      "description": "User AI generated creations and artifacts"
+    }
+  }
+}

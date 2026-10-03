@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --hud-cyan: #00f0ff;
+    --hud-blue: #0088ff;
+    --hud-dark: #040914;
+    --hud-panel: #071226;
+    --hud-border: #00e5ff33;
+  }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: #030712;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+
+  /* Monospace overrides */
+  code, kbd, samp, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Futuristic display headings */
+  .font-display {
+    font-family: 'Orbitron', 'Chakra Petch', sans-serif;
+  }
+
+  .font-tech {
+    font-family: 'Chakra Petch', sans-serif;
+  }
+}
+
+/* Custom scrollbar for HUD panels */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(4, 9, 20, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+}
+
+/* Sci-fi HUD card glow & corner accents */
+.hud-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(8, 22, 45, 0.75) 0%, rgba(4, 12, 28, 0.85) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.08), inset 0 0 15px rgba(0, 229, 255, 0.03);
+  backdrop-filter: blur(10px);
+}
+
+.hud-card-active {
+  border-color: rgba(0, 240, 255, 0.65);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2), inset 0 0 20px rgba(0, 240, 255, 0.08);
+}
+
+/* Corner bracket cuts */
+.hud-corner-brackets::before,
+.hud-corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+.hud-corner-brackets::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid #00f0ff;
+  border-left: 2px solid #00f0ff;
+}
+.hud-corner-brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid #00f0ff;
+  border-right: 2px solid #00f0ff;
+}
+
+/* Scanline effect overlay */
+.scanline-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 240, 255, 0.03) 50%,
+    rgba(0, 240, 255, 0.03)
+  );
+  background-size: 100% 4px;
+}
+
+/* Rotating animations */
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes hudPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.98); }
+}
+
+@keyframes waveOscillate {
+  0% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0.3); }
+}
+
+.animate-spin-slow {
+  animation: spinClockwise 20s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spinCounterClockwise 15s linear infinite;
+}
+
+.animate-spin-fast {
+  animation: spinClockwise 8s linear infinite;
+}
+
+.animate-hud-pulse {
+  animation: hudPulse 3s ease-in-out infinite;
+}
+
+/* Subtle cyber holographic HUD glitch entrance animation */
+@keyframes hudGlitchEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985) skewX(-1.5deg);
+    filter: drop-shadow(2px 0 0 rgba(0, 240, 255, 0.7)) drop-shadow(-2px 0 0 rgba(244, 63, 94, 0.5));
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 45%);
+  }
+  20% {
+    opacity: 0.75;
+    transform: translateY(-2px) scale(1.008) skewX(1deg);
+    filter: drop-shadow(-2px 0 0 rgba(0, 240, 255, 0.6)) drop-shadow(2px 0 0 rgba(244, 63, 94, 0.4));
+    clip-path: polygon(0 20%, 100% 15%, 100% 85%, 0 90%);
+  }
+  40% {
+    opacity: 0.9;
+    transform: translateY(1px) scale(0.995) skewX(-0.5deg);
+    filter: drop-shadow(1px 0 0 rgba(0, 240, 255, 0.4));
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  65% {
+    opacity: 0.98;
+    transform: translateY(-0.5px) scale(1.002);
+    filter: none;
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(0.2px) scale(1);
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) skewX(0deg);
+    filter: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.animate-glitch-in {
+  animation: hudGlitchEntrance 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  will-change: transform, opacity, filter, clip-path;
+}
+
+/* Theme variations */
+.theme-gold .hud-card {
+  border-color: rgba(251, 191, 36, 0.35);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+}
+.theme-gold .hud-corner-brackets::before,
+.theme-gold .hud-corner-brackets::after {
+  border-color: #fbbf24;
+}
+
+.theme-matrix .hud-card {
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+}
+.theme-matrix .hud-corner-brackets::before,
+.theme-matrix .hud-corner-brackets::after {
+  border-color: #10b981;
+}
+
+.theme-synthwave .hud-card {
+  border-color: rgba(192, 132, 252, 0.35);
+  box-shadow: 0 0 15px rgba(192, 132, 252, 0.12);
+}
+.theme-synthwave .hud-corner-brackets::before,
+.theme-synthwave .hud-corner-brackets::after {
+  border-color: #c084fc;
+}
+
